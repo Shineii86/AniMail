@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniMail - Anime Email Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --light-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --light-card: rgba(255, 255, 255, 0.8);
+            --light-text: #2d3748;
+            --light-primary: #ff6b6b;
+            --light-secondary: #4ecdc4;
+            --light-accent: #ff9a76;
+            --light-shadow: rgba(149, 157, 165, 0.2);
+            
+            /* Dark Theme Colors */
+            --dark-bg: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --dark-card: rgba(30, 30, 46, 0.7);
+            --dark-text: #e2e8f0;
+            --dark-primary: #ff79c6;
+            --dark-secondary: #bd93f9;
+            --dark-accent: #ffb86c;
+            --dark-shadow: rgba(0, 0, 0, 0.3);
+            
+            /* Common */
+            --transition: all 0.4s ease;
+        }
+        
+        .dark-mode {
+            --bg: var(--dark-bg);
+            --card: var(--dark-card);
+            --text: var(--dark-text);
+            --primary: var(--dark-primary);
+            --secondary: var(--dark-secondary);
+            --accent: var(--dark-accent);
+            --shadow: var(--dark-shadow);
+        }
+        
+        .light-mode {
+            --bg: var(--light-bg);
+            --card: var(--light-card);
+            --text: var(--light-text);
+            --primary: var(--light-primary);
+            --secondary: var(--light-secondary);
+            --accent: var(--light-accent);
+            --shadow: var(--light-shadow);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: var(--transition);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            font-size: 2.8rem;
+            color: var(--primary);
+        }
+        
+        .theme-toggle {
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            width: 70px;
+            height: 35px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:before {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            top: 4px;
+            left: 5px;
+            transition: var(--transition);
+        }
+        
+        .dark-mode .theme-toggle:before {
+            transform: translateX(35px);
+            background: var(--secondary);
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+        }
+        
+        .card h3 i {
+            font-size: 1.8rem;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input, select {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
+        
+        .dark-mode input, .dark-mode select {
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.6);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            box-shadow: 0 5px 15px rgba(255, 154, 118, 0.4);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 20px rgba(255, 154, 118, 0.6);
+        }
+        
+        .result {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px dashed var(--primary);
+        }
+        
+        .result h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary);
+        }
+        
+        .result p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--card);
+            color: var(--text);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            z-index: 1000;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .notification i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .feature {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            background: rgba(189, 147, 249, 0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-content h4 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .feature-content p {
+            line-height: 1.7;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 60px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-logo p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 350px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(189, 147, 249, 0.1);
+            color: var(--secondary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-section {
+            min-width: 150px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-section a {
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .footer-section a i {
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .input-wrapper {
+                flex-direction: column;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        /* Anime-themed decorations */
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--primary);
+            top: 10%;
+            left: 5%;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--secondary);
+            bottom: 10%;
+            right: 5%;
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--accent);
+            top: 70%;
+            left: 15%;
+        }
+        
+        .star {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0.3;
+            z-index: -1;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="decoration circle-1"></div>
+    <div class="decoration circle-2"></div>
+    <div class="decoration circle-3"></div>
+    
+    <!-- Decorative stars -->
+    <div class="star" style="top: 15%; left: 10%;">✦</div>
+    <div class="star" style="top: 25%; right: 15%;">✦</div>
+    <div class="star" style="bottom: 20%; left: 20%;">✦</div>
+    <div class="star" style="bottom: 30%; right: 10%;">✦</div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-envelope"></i>
+                <h1>AniMail</h1>
+            </div>
+            <div class="theme-toggle" id="themeToggle"></div>
+        </header>
+        
+        <section class="hero">
+            <h2>Generate Anime-themed Email Addresses</h2>
+            <p>Create unique and fun email addresses with our generator. Choose between random or custom addresses with our anime-themed domains.</p>
+        </section>
+        
+        <div class="cards">
+            <div class="card">
+                <h3><i class="fas fa-random"></i> Random Generator</h3>
+                <p>Generate a random anime-themed email and password instantly.</p>
+                
+                <div class="input-group">
+                    <label>Domain</label>
+                    <select id="randomDomain">
+                            <option value="@animail.org">@animail.org</option>
+                            <option value="@quinx.com">@quinx.com</option>
+                            <option value="@sakura.jp">@sakura.jp</option>
+                            <option value="@neko.anime">@neko.anime</option>
+                            <option value="@akuma.tech">@akuma.tech</option>
+                            <option value="@kawaii.dev">@kawaii.dev</option>
+                            <option value="@senpai.love">@senpai.love</option>
+                            <option value="@tsundere.io">@tsundere.io</option>
+                            <option value="@baka.land">@baka.land</option>
+                            <option value="@kitsune.jp">@kitsune.jp</option>
+                            <option value="@waifu.me">@waifu.me</option>
+                            <option value="@anime.world">@anime.world</option>
+                            <option value="@tanjiro.gg">@tanjiro.gg</option>
+                            <option value="@nezuko.dev">@nezuko.dev</option>
+                            <option value="@gomu.io">@gomu.io</option>
+                            <option value="@hokage.pro">@hokage.pro</option>
+                            <option value="@baka.jp">@baka.jp</option>
+                            <option value="@shinobi.co">@shinobi.co</option>
+                            <option value="@otaku.live">@otaku.live</option>
+                            <option value="@sugoi.email">@sugoi.email</option>
+                            <option value="@oniichan.lol">@oniichan.lol</option>
+                            <option value="@onepiece.fun">@onepiece.fun</option>
+                            <option value="@goku.zone">@goku.zone</option>
+                            <option value="@deku.mail">@deku.mail</option>
+                            <option value="@mangekyou.jp">@mangekyou.jp</option>
+                            <option value="@ahegao.dev">@ahegao.dev</option>
+                            <option value="@hashira.io">@hashira.io</option>
+                            <option value="@tsuki.org">@tsuki.org</option>
+                            <option value="@baka.cloud">@baka.cloud</option>
+                            <option value="@senpai.run">@senpai.run</option>
+                            <option value="@vibes.anime">@vibes.anime</option>
+                            <option value="@moe.cat">@moe.cat</option>
+                            <option value="@chan.love">@chan.love</option>
+                            <option value="@maid.cafe">@maid.cafe</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="generateRandom">
+                    <i class="fas fa-bolt"></i> Generate Random
+                </button>
+                
+                <div class="result" id="randomResult">
+                    <h4><i class="fas fa-envelope"></i> Your Random AniMail</h4>
+                    <p id="randomEmail">Click generate to create</p>
+                    <p id="randomPassword"></p>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="copyRandomEmail">
+                            <i class="fas fa-copy"></i> Copy Email
+                        </button>
+                        <button class="btn btn-accent" id="copyRandomPassword">
+                            <i class="fas fa-key"></i> Copy Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-cog"></i> Custom Generator</h3>
+                <p>Create your own custom anime-themed email address.</p>
+                
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="customUsername" placeholder="Enter your username">
+                </div>
+                
+                <div class="input-group">
+                    <label>Domain</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="customDomain" placeholder="Enter domain">
+                        <select id="domainSelector">
+                            <option value="@animail.org">@animail.org</option>
+                            <option value="@quinx.com">@quinx.com</option>
+                            <option value="@sakura.jp">@sakura.jp</option>
+                            <option value="@neko.anime">@neko.anime</option>
+                            <option value="@akuma.tech">@akuma.tech</option>
+                            <option value="@kawaii.dev">@kawaii.dev</option>
+                            <option value="@senpai.love">@senpai.love</option>
+                            <option value="@tsundere.io">@tsundere.io</option>
+                            <option value="@baka.land">@baka.land</option>
+                            <option value="@kitsune.jp">@kitsune.jp</option>
+                            <option value="@waifu.me">@waifu.me</option>
+                            <option value="@anime.world">@anime.world</option>
+                            <option value="@tanjiro.gg">@tanjiro.gg</option>
+                            <option value="@nezuko.dev">@nezuko.dev</option>
+                            <option value="@gomu.io">@gomu.io</option>
+                            <option value="@hokage.pro">@hokage.pro</option>
+                            <option value="@baka.jp">@baka.jp</option>
+                            <option value="@shinobi.co">@shinobi.co</option>
+                            <option value="@otaku.live">@otaku.live</option>
+                            <option value="@sugoi.email">@sugoi.email</option>
+                            <option value="@oniichan.lol">@oniichan.lol</option>
+                            <option value="@onepiece.fun">@onepiece.fun</option>
+                            <option value="@goku.zone">@goku.zone</option>
+                            <option value="@deku.mail">@deku.mail</option>
+                            <option value="@mangekyou.jp">@mangekyou.jp</option>
+                            <option value="@ahegao.dev">@ahegao.dev</option>
+                            <option value="@hashira.io">@hashira.io</option>
+                            <option value="@tsuki.org">@tsuki.org</option>
+                            <option value="@baka.cloud">@baka.cloud</option>
+                            <option value="@senpai.run">@senpai.run</option>
+                            <option value="@vibes.anime">@vibes.anime</option>
+                            <option value="@moe.cat">@moe.cat</option>
+                            <option value="@chan.love">@chan.love</option>
+                            <option value="@maid.cafe">@maid.cafe</option>
+                            <option value="custom">Custom Domain</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="text" id="customPassword" placeholder="Enter password">
+                </div>
+                
+                <button class="btn" id="generateCustom">
+                    <i class="fas fa-paper-plane"></i> Generate Custom
+                </button>
+                
+                <div class="result" id="customResult">
+                    <h4><i class="fas fa-envelope"></i> Your Custom AniMail</h4>
+                    <p id="customEmail">Enter details and generate</p>
+                    <p id="customPassResult"></p>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" id="copyCustomEmail">
+                            <i class="fas fa-copy"></i> Copy Email
+                        </button>
+                        <button class="btn btn-accent" id="copyCustomPassword">
+                            <i class="fas fa-key"></i> Copy Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-lock"></i>
+                <div class="feature-content">
+                    <h4>Secure Passwords</h4>
+                    <p>We generate strong, unique passwords that are difficult to crack, keeping your accounts safe.</p>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-paint-brush"></i>
+                <div class="feature-content">
+                    <h4>Anime Themes</h4>
+                    <p>Enjoy our premium anime-themed design with vibrant colors and smooth animations.</p>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-moon"></i>
+                <div class="feature-content">
+                    <h4>Dark/Light Mode</h4>
+                    <p>Switch between themes based on your preference or time of day for comfortable usage.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>AniMail</h3>
+                    <p>Your ultimate solution for creating unique anime-themed email addresses with premium domains and secure passwords.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Shineii86" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://telegram.me/Shineii86" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://twitter.com/Shineii86" target="_blank" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="https://github.com/AniPulse/ToS"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                            <li><a href="https://github.com/AniPulse/Privacy"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Shinei Nouzen. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div>
+            <h4>Copied!</h4>
+            <p>Text has been copied to clipboard</p>
+        </div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const notification = document.getElementById('notification');
+        
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            body.classList.toggle('dark-mode');
+            
+            // Save preference
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Anime.js animation for theme switch
+            anime({
+                targets: 'body',
+                duration: 800,
+                easing: 'easeOutExpo',
+                backgroundColor: isDarkMode ? '#0f0c29' : '#f5f7fa',
+                background: [
+                    {value: isDarkMode ? 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'},
+                ],
+            });
+            
+            // Animate stars
+            anime({
+                targets: '.star',
+                rotate: '+=360',
+                duration: 1500,
+                easing: 'easeInOutSine'
+            });
+        });
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+        }
+        
+        // Notification function
+        function showNotification(message) {
+            notification.querySelector('h4').textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Random Generator
+        const generateRandomBtn = document.getElementById('generateRandom');
+        const randomEmailEl = document.getElementById('randomEmail');
+        const randomPasswordEl = document.getElementById('randomPassword');
+        const copyRandomEmailBtn = document.getElementById('copyRandomEmail');
+        const copyRandomPasswordBtn = document.getElementById('copyRandomPassword');
+        const randomDomain = document.getElementById('randomDomain');
+        
+        const animeNames = ['sakura', 'naruto', 'goku', 'luffy', 'nezuko', 'levi', 'eren', 'mikasa', 'hinata', 'sasuke',
+                            'itachi', 'kakashi', 'usopp', 'zoro', 'nami', 'robin', 'chopper', 'gohan', 'vegeta', 'bulma',  'trunks', 'gojo', 'satoru', 'megumi', 'yuji', 'nobara', 'tanjiro', 'zenitsu', 'inosuke',
+                            'shinobu', 'rengoku', 'aizen', 'ichigo', 'rukia', 'ulquiorra', 'kenpachi', 'hitsugaya', 'yoruichi', 'grimmjow',
+                            'kirito', 'asuna', 'saber', 'armin', 'gintoki', 'shinpachi', 'kagura', 'meliodas', 'ban',
+                            'escanor', 'diane', 'elizabeth', 'king', 'merlin', 'rimuru', 'milim', 'shuna', 'shion',
+                            'raphtalia', 'naofumi', 'kaori', 'tohru', 'kanna', 'anzu', 'misaka', 'accelerator', 'kamui',
+                            'madara', 'obito', 'deidara', 'hidan', 'konan', 'pain', 'jiraiya', 'tsunade', 'minato',
+                            'boruto', 'sarada', 'mitsuki', 'shikamaru', 'ino', 'choji', 'temari', 'kankuro', 'gaara',
+                            'killua', 'gon', 'hisoka', 'kurapika', 'leorio', 'chrollo', 'netero', 'allmight', 'deku',
+                            'bakugo', 'todoroki', 'uravity', 'tsuyu', 'mirio', 'overhaul', 'endeavor', 'hawks',
+                            'yor', 'loidy', 'anya', 'nagisa', 'karma', 'koro', 'kaname', 'yuki', 'kagome', 'inuyasha',
+                            'sesshomaru', 'vash', 'spike', 'edward', 'alphonse', 'roy', 'winry', 'guts', 'griffith' ];
+
+        const animeWords = ['kawaii', 'kitsune', 'senpai', 'nakama', 'baka', 'tsundere', 'yamete', 'sugoi',
+                            'kamehameha', 'rasengan', 'bankai', 'shinigami', 'hollow', 'shikai', 'zanpakuto',
+                            'chidori', 'sharingan', 'byakugan', 'rasenshuriken', 'mangekyou', 'susanoo',
+                            'hokage', 'akatsuki', 'kage', 'jinchuriki', 'tailed', 'beast', 'demon', 'slayer',
+                            'hashira', 'breath', 'nichirin', 'seinen', 'shounen', 'yandere', 'kuudere', 'baka', 'oniichan', 'oneechan', 'ecchi',
+                            'harem', 'isekai', 'neko', 'tenshi', 'youkai', 'fushigi', 'kaiju', 'mecha', 'zetsubo',
+                            'shoujo', 'baka', 'oppai', 'oni', 'tenshi', 'genjutsu', 'taijutsu', 'ninjustu', 'chakra',
+                            'doujutsu', 'hyouton', 'katon', 'suiton', 'raiton', 'fuuton', 'zanpakutou', 'haki',
+                            'gearfourth', 'oneforall', 'allforone', 'quirk', 'devilfruit', 'gomu', 'bushoshoku',
+                            'kenbunshoku', 'ryuo', 'dragonball', 'deathnote', 'notebook', 'reaper', 'yandere',
+                            'bakemono', 'kaisen', 'jujutsu', 'soul', 'titan', 'colossal', 'beasttitan', 'founding',
+                            'mugen', 'infinity', 'domain', 'expansion', 'zenin', 'blackflash', 'nanami', 'cursed',
+                            'phantom', 'greed', 'alchemy', 'elric', 'homunculus', 'transmute', 'fullmetal',
+                            'gunslinger', 'mob', 'esper', 'psychic', 'clover', 'grimmoire', 'animeverse'];
+        
+        function generateRandomName() {
+            const name = animeNames[Math.floor(Math.random() * animeNames.length)];
+            const word = animeWords[Math.floor(Math.random() * animeWords.length)];
+            const num = Math.floor(Math.random() * 100);
+            return `${name}_${word}${num}`;
+        }
+        
+        function generateRandomPassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$';
+            let password = '';
+            for (let i = 0; i < 12; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
+        }
+        
+        generateRandomBtn.addEventListener('click', () => {
+            const username = generateRandomName();
+            const domain = randomDomain.value;
+            const password = generateRandomPassword();
+            
+            randomEmailEl.textContent = `${username}${domain}`;
+            randomPasswordEl.textContent = `Password: ${password}`;
+            
+            // Anime.js animation
+            anime({
+                targets: '#randomResult',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                duration: 800,
+                easing: 'spring(1, 80, 10, 0)'
+            });
+        });
+        
+        copyRandomEmailBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(randomEmailEl.textContent);
+            showNotification('Email Copied!');
+        });
+        
+        copyRandomPasswordBtn.addEventListener('click', () => {
+            const password = randomPasswordEl.textContent.replace('Password: ', '');
+            navigator.clipboard.writeText(password);
+            showNotification('Password Copied!');
+        });
+        
+        // Custom Generator
+        const generateCustomBtn = document.getElementById('generateCustom');
+        const customEmailEl = document.getElementById('customEmail');
+        const customPassResultEl = document.getElementById('customPassResult');
+        const copyCustomEmailBtn = document.getElementById('copyCustomEmail');
+        const copyCustomPasswordBtn = document.getElementById('copyCustomPassword');
+        const domainSelector = document.getElementById('domainSelector');
+        const customDomainInput = document.getElementById('customDomain');
+        
+        domainSelector.addEventListener('change', (e) => {
+            if (e.target.value === 'custom') {
+                customDomainInput.style.display = 'block';
+                customDomainInput.value = '';
+            } else {
+                customDomainInput.style.display = 'none';
+                customDomainInput.value = e.target.value;
+            }
+        });
+        
+        generateCustomBtn.addEventListener('click', () => {
+            const username = document.getElementById('customUsername').value || 'anime_fan';
+            const domain = customDomainInput.value || '@quinx.com';
+            const password = document.getElementById('customPassword').value || generateRandomPassword();
+            
+            customEmailEl.textContent = `${username}${domain}`;
+            customPassResultEl.textContent = `Password: ${password}`;
+            
+            // Anime.js animation
+            anime({
+                targets: '#customResult',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                duration: 800,
+                easing: 'spring(1, 80, 10, 0)'
+            });
+        });
+        
+        copyCustomEmailBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(customEmailEl.textContent);
+            showNotification('Email Copied!');
+        });
+        
+        copyCustomPasswordBtn.addEventListener('click', () => {
+            const password = customPassResultEl.textContent.replace('Password: ', '');
+            navigator.clipboard.writeText(password);
+            showNotification('Password Copied!');
+        });
+        
+        // Initial animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header animation
+            anime({
+                targets: 'header',
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutExpo'
+            });
+            
+            // Card animations
+            anime({
+                targets: '.card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1200,
+                delay: anime.stagger(200),
+                easing: 'easeOutExpo'
+            });
+            
+            // Feature animations
+            anime({
+                targets: '.feature',
+                translateX: [-30, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                delay: anime.stagger(100),
+                easing: 'easeOutExpo'
+            });
+            
+            // Footer animation
+            anime({
+                targets: 'footer',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1500,
+                delay: 500,
+                easing: 'easeOutExpo'
+            });
+            
+            // Social icons animation
+            anime({
+                targets: '.social-links a',
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 800,
+                delay: anime.stagger(100),
+                easing: 'spring(1, 80, 10, 0)'
+            });
+            
+            // Twinkle stars
+            anime({
+                targets: '.star',
+                opacity: [0.3, 0.8],
+                duration: 2000,
+                direction: 'alternate',
+                loop: true,
+                easing: 'easeInOutSine',
+                delay: anime.stagger(500)
+            });
+        });
+    </script>
+</body>
+</html>
