@@ -5,7 +5,7 @@
 
 AniMail is a sleek, anime-themed email generator that creates unique email addresses with premium domains. Featuring vibrant colors, glassmorphism design, and smooth animations, it offers both random and custom email generation with password creation capabilities.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=google-chrome)](https://your-demo-link.com)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=google-chrome)](https://shineii86.github.io/animail)
 ![Last Commit](https://img.shields.io/github/last-commit/Shineii86/AniMail?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/Shineii86/AniMail?style=for-the-badge) [![GitHub Stars](https://img.shields.io/github/stars/Shineii86/AniMail?style=for-the-badge)](https://github.com/Shineii86/AniMail/stargazers) [![GitHub Forks](https://img.shields.io/github/forks/Shineii86/AniMail?style=for-the-badge)](https://github.com/Shineii86/AniMail/fork)
 
@@ -26,7 +26,7 @@ AniMail is a sleek, anime-themed email generator that creates unique email addre
 ## 🚀 Live Demo
 
 Experience AniMail live:  
-[![Live Demo Button](https://img.shields.io/badge/Experience_AniMail-Live_Demo-9cf?style=for-the-badge&logo=vercel)](https://your-demo-link.com)
+[![Live Demo Button](https://img.shields.io/badge/Experience_AniMail-Live_Demo-9cf?style=for-the-badge&logo=vercel)](https://shineii86.github.io/animail)
 
 ## 🛠️ Technologies Used
 
