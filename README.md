@@ -1,7 +1,8 @@
 <div align="center">
   
-  # [AniMail](https://github.com/AniPulse)
-  *Anime-Themed Email Generator*
+# [AniMail](https://github.com/AniPulse)
+
+<img src="./assets/banner0.png" alt="Banner" width="1000" />
 
 AniMail is a sleek, anime-themed email generator that creates unique email addresses with premium domains. Featuring vibrant colors, glassmorphism design, and smooth animations, it offers both random and custom email generation with password creation capabilities.
 
@@ -36,6 +37,9 @@ Experience AniMail live:
 ![Anime.js](https://img.shields.io/badge/Anime.js-2C2D72?style=flat&logo=anime.js&logoColor=white)
 ![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=flat&logo=font-awesome&logoColor=white)
 ![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?style=flat&logo=google-fonts&logoColor=white)
+
+
+<img src="./assets/banner1.png" alt="Banner" width="1000" />
 
 ## 🎨 Customization Guide
 
@@ -126,6 +130,8 @@ open index.html
 xdg-open index.html
 ```
 
+<img src="./assets/banner2.png" alt="Banner" width="1000" />
+
 ## 🌟 Features in Detail
 
 | Feature | Description | Emoji |
@@ -167,18 +173,15 @@ Contributions are welcome! Follow these steps:
 - [Google Fonts](https://fonts.google.com/) for Noto Sans font
 - [Shields.io](https://shields.io/) for badges
 
+
+<img src="./assets/banner3.png" alt="Banner" width="1000" />
+
 ---
+
 ## 🪪 License
 
 This project is licensed under the [MIT License](LICENSE).
 Feel free to use, remix, and share it with proper credits.
-
----
-
-## 👤 Credits
-
-> Project created by [**Shinei Nouzen**](https://github.com/Shineii86)
-> Built with ❤️ passion for Anime and Open Source.
 
 ---
 
