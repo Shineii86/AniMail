@@ -101,7 +101,7 @@ Update the footer content in the HTML:
   <div class="footer-content">
     <!-- Update social links, legal pages, and copyright -->
     <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-    <p>&copy; 2023 Your Name. All rights reserved.</p>
+    <p>&copy; 2025 Your Name. All rights reserved.</p>
   </div>
 </footer>
 ```
